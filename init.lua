@@ -293,7 +293,15 @@ require('lazy').setup({
       },
     },
   },
-
+  {
+    'nvim-flutter/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      --   'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+    config = true,
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -664,6 +672,11 @@ require('lazy').setup({
         },
       })
       vim.lsp.enable 'lua_ls'
+
+      vim.lsp.config('dart_lsp', {})
+      vim.lsp.enable 'dart_lsp'
+
+      vim.lsp.enable 'gopls'
     end,
   },
 
@@ -869,6 +882,13 @@ require('lazy').setup({
         pattern = filetypes,
         callback = function() vim.treesitter.start() end,
       })
+
+      require('nvim-treesitter.config').setup {
+        ensure_installed = 'all',
+        highlight = {
+          enabled = true,
+        },
+      }
     end,
   },
 
@@ -919,6 +939,8 @@ require('lazy').setup({
     },
   },
 })
-
+require('flutter-tools').setup {
+  flutter_path = '/home/zcarr/.local/share/flutter/bin/',
+}
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
